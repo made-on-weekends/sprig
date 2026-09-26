@@ -1,0 +1,10 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sprig symbolic icon">
+  <g fill="none" stroke="#FFFFFF" stroke-width="26" stroke-linejoin="round" stroke-linecap="round">
+    <rect x="96" y="104" width="300" height="240" rx="64"/>
+    <path d="M170 316 L138 418 L262 336"/>
+  </g>
+  <g transform="rotate(14 246 214)">
+    <path d="M246 150 C292 180 292 252 246 282 C200 252 200 180 246 150 Z" fill="#FFFFFF"/>
+    <path d="M246 164 L246 268" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round"/>
+  </g>
+</svg>

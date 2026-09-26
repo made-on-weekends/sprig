@@ -1,0 +1,1554 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Sprig — A native WhatsApp & Google Messages client for Linux
+   Design System & Component Styles
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@import '../assets/brand/theme.css';
+
+:root {
+  /* Brand Palette (Botanical Emerald) */
+  --primary: #16B364;
+  --primary-light: #2AC66C;
+  --primary-deep: #12915A;
+  --secondary: #0C6B4E;
+  
+  /* Surface Tokens */
+  --bg-main: #0E1512;
+  --bg-panel: #16211C;
+  --bg-hover: #1E2A24;
+  --bg-active: #23332B;
+  --bg-webview: #0E1512;
+  --bg-dialog: #16211C;
+  --bg-input: #1E2A24;
+
+  /* Status Tokens */
+  --danger: #E5484D;
+  --danger-hover: #FF6B6B;
+  --warning: #F59E0B;
+  --success: #16B364;
+
+  /* Typography & Borders */
+  --text-main: #E3EDE7;
+  --text-muted: #6B7B72;
+  --text-on-primary: #FFFFFF;
+  --border-color: #26332C;
+  --border-subtle: rgba(38, 51, 44, 0.5);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 16px rgba(22, 179, 100, 0.25);
+
+  /* Layout Dimensions & Transitions */
+  --sidebar-width: 240px;
+  --sidebar-collapsed-width: 64px;
+  --header-height: 56px;
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-medium: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-sidebar: 280ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Light Theme Overrides (libadwaita style) */
+body.light-theme {
+  --bg-main: #F7FBF8;
+  --bg-panel: #FFFFFF;
+  --bg-hover: #E7F6EC;
+  --bg-active: #D9F2E1;
+  --bg-webview: #F7FBF8;
+  --bg-dialog: #FFFFFF;
+  --bg-input: #E3EDE7;
+  --text-main: #10201A;
+  --text-muted: #6B7B72;
+  --border-color: #E3EDE7;
+  --border-subtle: rgba(227, 237, 231, 0.8);
+}
+
+/* ─── Reset & Base ───────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Ubuntu', 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  color: var(--text-main);
+  background: var(--bg-main);
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+  outline: none;
+}
+
+input, select {
+  font-family: inherit;
+  font-size: inherit;
+  outline: none;
+}
+
+/* ─── App Layout ─────────────────────────────────────────────────────────── */
+#app {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* ─── Sidebar ────────────────────────────────────────────────────────────── */
+#sidebar {
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-collapsed-width);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-panel);
+  border-right: 1px solid var(--border-color);
+  position: relative;
+  z-index: 10;
+  transition: width var(--transition-sidebar);
+  flex-shrink: 0;
+  will-change: width;
+}
+
+#sidebar.collapsed {
+  width: var(--sidebar-collapsed-width);
+  min-width: var(--sidebar-collapsed-width);
+  overflow: hidden;
+}
+
+/* Sidebar header */
+#sidebar-header {
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+  overflow: hidden;
+  cursor: pointer;
+  -webkit-app-region: drag;
+  transition: padding var(--transition-sidebar);
+}
+
+#sidebar-header button {
+  -webkit-app-region: no-drag;
+}
+
+#app-logo {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: transform var(--transition-fast), margin var(--transition-sidebar);
+}
+
+#app-logo:hover {
+  transform: scale(1.06);
+}
+
+#app-logo svg,
+#app-logo img {
+  width: 36px;
+  height: 36px;
+  display: block;
+  transition: width var(--transition-sidebar), height var(--transition-sidebar);
+}
+
+#app-title {
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  color: var(--text-main);
+  white-space: nowrap;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: opacity 180ms cubic-bezier(0.4, 0, 0.2, 1), transform 180ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Header Collapsed Layout */
+#sidebar.collapsed #sidebar-header {
+  padding: 0;
+  justify-content: center;
+  position: relative;
+}
+
+#sidebar.collapsed #app-logo {
+  margin: 0 auto;
+}
+
+/* Account Tabs Container */
+#account-tabs {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 8px 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: padding var(--transition-sidebar);
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
+}
+
+#account-tabs::-webkit-scrollbar {
+  width: 4px;
+}
+
+#account-tabs::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+/* Individual Account Tab */
+.account-tab {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 10px 6px 6px;
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+  border: 1px solid transparent;
+  overflow: hidden;
+  transition: width var(--transition-sidebar),
+              height var(--transition-sidebar),
+              padding var(--transition-sidebar),
+              margin var(--transition-sidebar),
+              border-radius var(--transition-sidebar),
+              background var(--transition-fast),
+              border-color var(--transition-fast);
+}
+
+.account-tab:hover {
+  background: var(--bg-hover);
+}
+
+.account-tab.active {
+  background: var(--bg-active);
+  border-color: var(--border-color);
+  box-shadow: inset 3px 0 0 var(--primary);
+}
+
+/* Shared Icon Wrapper for Sidebar Items */
+.btn-icon-wrapper,
+.account-avatar-wrapper {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: margin var(--transition-sidebar),
+              width var(--transition-sidebar),
+              height var(--transition-sidebar);
+}
+
+.account-avatar {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  max-width: 36px;
+  max-height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  color: #FFFFFF;
+  position: relative;
+  flex-shrink: 0;
+  overflow: hidden;
+  transition: width var(--transition-sidebar),
+              height var(--transition-sidebar),
+              min-width var(--transition-sidebar),
+              min-height var(--transition-sidebar),
+              max-width var(--transition-sidebar),
+              max-height var(--transition-sidebar),
+              font-size var(--transition-sidebar),
+              margin var(--transition-sidebar);
+}
+
+.account-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+/* Account Name */
+.account-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  transition: opacity 180ms cubic-bezier(0.4, 0, 0.2, 1), transform 180ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Unread Badge */
+.unread-badge {
+  position: absolute;
+  top: -3px;
+  right: -5px;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  background: var(--primary);
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  box-shadow: 0 0 0 2px var(--bg-panel);
+  z-index: 2;
+  transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.unread-badge.hidden {
+  display: none;
+}
+
+/* Shortcut Hint */
+.shortcut-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  background: var(--bg-input);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: opacity 180ms cubic-bezier(0.4, 0, 0.2, 1), transform 180ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── Add Account Button ─────────────────────────────────────────────────── */
+#add-account-btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 4px 10px 4px 6px;
+  margin: 4px 6px;
+  border-radius: 10px;
+  color: var(--text-muted);
+  border: 1px dashed var(--border-color);
+  overflow: hidden;
+  transition: width var(--transition-sidebar),
+              height var(--transition-sidebar),
+              padding var(--transition-sidebar),
+              margin var(--transition-sidebar),
+              border-radius var(--transition-sidebar),
+              color var(--transition-fast),
+              background var(--transition-fast),
+              border-color var(--transition-fast);
+}
+
+#add-account-btn:hover {
+  color: var(--primary);
+  background: var(--bg-hover);
+  border-color: var(--primary);
+}
+
+#add-account-btn svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+#add-account-btn span {
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: opacity 180ms cubic-bezier(0.4, 0, 0.2, 1), transform 180ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── Sidebar Footer ─────────────────────────────────────────────────────── */
+#sidebar-footer {
+  padding: 8px 6px 12px;
+  border-top: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: padding var(--transition-sidebar);
+}
+
+#donate-btn,
+#settings-btn {
+  width: 100%;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 4px 10px 4px 6px;
+  gap: 12px;
+  color: var(--text-muted);
+  overflow: hidden;
+  transition: width var(--transition-sidebar),
+              height var(--transition-sidebar),
+              padding var(--transition-sidebar),
+              margin var(--transition-sidebar),
+              border-radius var(--transition-sidebar),
+              color var(--transition-fast),
+              background var(--transition-fast);
+}
+
+#donate-btn:hover {
+  color: #FF5A79;
+  background: rgba(255, 90, 121, 0.1);
+}
+
+#donate-btn:hover svg {
+  stroke: #FF5A79;
+  transform: scale(1.1);
+}
+
+#donate-btn svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  transition: transform var(--transition-fast), stroke var(--transition-fast);
+}
+
+#settings-btn:hover {
+  color: var(--text-main);
+  background: var(--bg-hover);
+}
+
+#settings-btn svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+#donate-btn span,
+#settings-btn span {
+  transition: opacity 180ms cubic-bezier(0.4, 0, 0.2, 1), transform 180ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── Collapsed Sidebar Strict Protection ────────────────────────────────── */
+#sidebar.collapsed #account-tabs {
+  padding: 8px 4px;
+  overflow-x: hidden;
+}
+
+#sidebar.collapsed .account-tab {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  margin: 4px auto;
+  justify-content: center;
+  border-radius: 12px;
+  box-shadow: none;
+  gap: 0 !important;
+
+  display: flex !important;
+  align-items: center !important;
+}
+
+#sidebar.collapsed .account-tab.active {
+  background: var(--bg-active);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 1px var(--primary);
+}
+
+#sidebar.collapsed .account-avatar-wrapper {
+  margin: 0 auto;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+}
+
+#sidebar.collapsed .account-avatar {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  max-width: 32px;
+  max-height: 32px;
+  font-size: 13px;
+  margin: 0 auto;
+}
+
+#sidebar.collapsed #add-account-btn {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  margin: 6px auto;
+  justify-content: center;
+  border-radius: 12px;
+  gap: 0 !important;
+}
+
+#sidebar.collapsed #add-account-btn .btn-icon-wrapper,
+#sidebar.collapsed #add-account-btn svg {
+  margin: 0 auto;
+}
+
+#sidebar.collapsed #sidebar-footer {
+  padding: 8px 4px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+}
+
+#sidebar.collapsed #donate-btn,
+#sidebar.collapsed #settings-btn {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  margin: 0 auto;
+  justify-content: center;
+  border-radius: 12px;
+  gap: 0 !important;
+}
+
+#sidebar.collapsed #donate-btn .btn-icon-wrapper,
+#sidebar.collapsed #donate-btn svg,
+#sidebar.collapsed #settings-btn .btn-icon-wrapper,
+#sidebar.collapsed #settings-btn svg {
+  margin: 0 auto;
+}
+
+/* Smooth Hide all text in Collapsed Sidebar (no layout snap, 0 flex footprint) */
+#sidebar.collapsed #app-title,
+#sidebar.collapsed .account-name,
+#sidebar.collapsed .shortcut-hint,
+#sidebar.collapsed .btn-label,
+#sidebar.collapsed .tooltip,
+#sidebar.collapsed #add-account-btn span,
+#sidebar.collapsed #donate-btn span,
+#sidebar.collapsed #settings-btn span {
+  opacity: 0 !important;
+  transform: translateX(-10px) !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  position: absolute !important;
+  max-width: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  visibility: hidden !important;
+}
+
+/* ─── Webview Container ──────────────────────────────────────────────────── */
+#webview-container {
+  flex: 1;
+  position: relative;
+  background: var(--bg-webview);
+  overflow: hidden;
+}
+
+#webview-container webview {
+  display: flex;
+  flex: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-medium);
+}
+
+#webview-container webview.active {
+  opacity: 1;
+  pointer-events: all;
+  z-index: 1;
+}
+
+/* ─── Loading Screen ─────────────────────────────────────────────────────── */
+#loading-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background: var(--bg-main);
+  z-index: 5;
+  transition: opacity var(--transition-fast);
+}
+
+#loading-screen.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading-spinner {
+  width: 44px;
+  height: 44px;
+  border: 3px solid var(--border-color);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+#loading-screen p {
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* ─── Context Menu ───────────────────────────────────────────────────────── */
+.context-menu {
+  position: fixed;
+  min-width: 160px;
+  background: var(--bg-dialog);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 4px;
+  box-shadow: var(--shadow-md);
+  z-index: 1000;
+}
+
+.context-menu.hidden { display: none; }
+
+.context-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-main);
+  transition: background var(--transition-fast);
+}
+
+.context-menu-item svg {
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  min-height: 16px;
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+
+.context-menu-item:hover svg {
+  color: var(--text-main);
+}
+
+.context-menu-item:hover { background: var(--bg-hover); }
+
+.context-menu-item.danger { color: var(--danger); }
+.context-menu-item.danger svg { color: var(--danger); }
+.context-menu-item.danger:hover { background: rgba(229, 72, 77, 0.12); }
+
+.context-menu-divider {
+  height: 1px;
+  background: var(--border-subtle);
+  margin: 4px 0;
+}
+
+/* ─── Dialog Overlay & Simple Modals ─────────────────────────────────────── */
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  backdrop-filter: blur(8px);
+}
+
+.dialog-overlay.hidden { display: none; }
+
+.dialog {
+  background: var(--bg-dialog);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 24px;
+  min-width: 340px;
+  max-width: 420px;
+  box-shadow: var(--shadow-lg);
+}
+
+.dialog.dialog-lg {
+  max-width: 460px;
+  width: 460px;
+}
+
+.dialog h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.dialog-description {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+/* Service Selector in Add Account Dialog */
+.service-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.service-option {
+  display: block;
+  cursor: pointer;
+  position: relative;
+}
+
+.service-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.service-option-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  background: var(--bg-input);
+  border: 1.5px solid var(--border-color);
+  border-radius: 12px;
+  transition: all var(--transition-fast);
+}
+
+.service-option:hover .service-option-card {
+  background: var(--bg-hover);
+  border-color: var(--primary-deep);
+}
+
+.service-option.active .service-option-card,
+.service-option input[type="radio"]:checked + .service-option-card {
+  background: var(--bg-active);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 1px var(--primary), var(--shadow-glow);
+}
+
+.service-icon {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.service-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.whatsapp-icon {
+  background: rgba(22, 179, 100, 0.15);
+  color: #25D366;
+}
+
+.google-messages-icon {
+  background: rgba(66, 133, 244, 0.15);
+  color: #4285F4;
+}
+
+.service-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.service-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.service-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.form-group {
+  margin-top: 12px;
+  margin-bottom: 8px;
+}
+
+.form-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Avatar Picker Section in Add Dialog */
+.avatar-picker-section {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 14px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
+
+.avatar-picker-preview {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  background: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+  color: #FFFFFF;
+  overflow: hidden;
+  position: relative;
+  box-shadow: var(--shadow-sm);
+}
+
+.avatar-picker-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.avatar-picker-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Service Badge on Tab Avatar */
+.account-service-badge {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-panel);
+  box-shadow: 0 0 0 1.5px var(--bg-panel);
+  z-index: 2;
+  transition: all var(--transition-sidebar);
+}
+
+.account-service-badge svg {
+  width: 10px;
+  height: 10px;
+}
+
+.account-service-badge.whatsapp svg {
+  color: #25D366;
+}
+
+.account-service-badge.google-messages svg {
+  color: #4285F4;
+}
+
+#sidebar.collapsed .account-service-badge {
+  bottom: -2px;
+  right: -2px;
+  width: 13px;
+  height: 13px;
+}
+
+#sidebar.collapsed .account-service-badge svg {
+  width: 8px;
+  height: 8px;
+}
+
+.dialog input[type="text"] {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-main);
+  margin-top: 4px;
+}
+
+.dialog input[type="text"]:focus {
+  border-color: var(--primary);
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.dialog-btn {
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.dialog-btn.primary {
+  background: var(--primary);
+  color: #FFFFFF;
+}
+
+.dialog-btn.primary:hover {
+  background: var(--primary-light);
+}
+
+.dialog-btn.secondary {
+  background: var(--bg-input);
+  color: var(--text-muted);
+}
+
+.dialog-btn.secondary:hover {
+  background: var(--bg-hover);
+  color: var(--text-main);
+}
+
+/* ─── Settings Modal Layout ──────────────────────────────────────────────── */
+.settings-modal {
+  width: 680px;
+  max-width: 90vw;
+  height: 520px;
+  max-height: 85vh;
+  background: var(--bg-dialog);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.settings-header {
+  height: 56px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-panel);
+}
+
+.settings-header h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.icon-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  transition: all var(--transition-fast);
+}
+
+.icon-btn:hover {
+  color: var(--text-main);
+  background: var(--bg-hover);
+}
+
+.icon-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.settings-body {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.settings-nav {
+  width: 190px;
+  background: var(--bg-panel);
+  border-right: 1px solid var(--border-color);
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.settings-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: all var(--transition-fast);
+  text-align: left;
+}
+
+.settings-tab-btn:hover {
+  color: var(--text-main);
+  background: var(--bg-hover);
+}
+
+.settings-tab-btn.active {
+  color: var(--primary);
+  background: var(--bg-active);
+  font-weight: 600;
+}
+
+.settings-tab-btn svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.settings-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.settings-panel {
+  display: none;
+}
+
+.settings-panel.active {
+  display: block;
+}
+
+.settings-panel h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--text-main);
+}
+
+.panel-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+/* Setting Row Item */
+.setting-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-subtle);
+  gap: 16px;
+}
+
+.setting-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.setting-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.setting-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Custom Toggle Switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  transition: .2s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 2px;
+  bottom: 2px;
+  background-color: var(--text-muted);
+  transition: .2s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+  background-color: #FFFFFF;
+}
+
+/* Compact Toggle Switch for Subpanels */
+.switch.switch-small {
+  width: 36px;
+  height: 20px;
+}
+
+.switch.switch-small .slider {
+  border-radius: 20px;
+}
+
+.switch.switch-small .slider:before {
+  height: 14px;
+  width: 14px;
+  left: 2px;
+  bottom: 2px;
+}
+
+.switch.switch-small input:checked + .slider:before {
+  transform: translateX(16px);
+}
+
+.setting-select {
+  padding: 8px 12px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-main);
+  font-size: 13px;
+  min-width: 180px;
+}
+
+/* Accounts & Storage List in Settings */
+.settings-account-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.settings-account-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+}
+
+.settings-account-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-small {
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 6px;
+  background: var(--bg-input);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-fast);
+}
+
+.btn-small:hover {
+  background: var(--bg-hover);
+  border-color: var(--primary);
+}
+
+.btn-small.btn-danger {
+  color: #F87171;
+  border-color: rgba(239, 68, 68, 0.25);
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.btn-small.btn-danger:hover {
+  color: #FFFFFF;
+  background: #DC2626;
+  border-color: #DC2626;
+}
+
+.notif-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.notif-toggle-btn.active {
+  color: var(--primary-light);
+  border-color: rgba(22, 179, 100, 0.35);
+  background: rgba(22, 179, 100, 0.1);
+}
+
+.notif-toggle-btn.active:hover {
+  background: rgba(22, 179, 100, 0.18);
+  border-color: var(--primary);
+}
+
+.notif-toggle-btn:not(.active) {
+  color: var(--text-muted);
+  border-color: var(--border-color);
+  background: var(--bg-input);
+  opacity: 0.75;
+}
+
+.notif-toggle-btn:not(.active):hover {
+  color: var(--text-main);
+  opacity: 1;
+}
+
+/* ─── Account-Wise Notification Subpanel ────────────────────────────────── */
+.account-notifications-subpanel {
+  margin: -4px 0 8px 0;
+  padding: 12px 14px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: opacity var(--transition-fast);
+}
+
+.account-notifications-subpanel.disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.subpanel-header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.subpanel-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.subpanel-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.settings-notifications-account-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.settings-notif-account-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 0;
+}
+
+.settings-notif-account-row:not(:last-child) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+body.light-theme .settings-notif-account-row:not(:last-child) {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.setting-item.disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* About Tab Styling */
+.about-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px 10px;
+  gap: 8px;
+}
+
+.about-logo {
+  width: 72px;
+  height: 72px;
+  margin-bottom: 8px;
+}
+
+.about-tagline {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+.about-version {
+  font-size: 12px;
+  color: var(--text-muted);
+  background: var(--bg-input);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.about-disclaimer {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  text-align: left;
+}
+
+/* ─── Settings Section Dividers & Extended Controls ─────────────────────── */
+.setting-section-divider {
+  height: 1px;
+  background: var(--border-subtle);
+  margin: 16px 0;
+}
+
+.setting-item.flex-column {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.btn-secondary {
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 8px;
+  background: var(--bg-input);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-fast);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-hover);
+  border-color: var(--primary);
+}
+
+.btn-secondary.danger-btn {
+  background: rgba(229, 72, 77, 0.12);
+  color: var(--danger);
+  border-color: rgba(229, 72, 77, 0.3);
+}
+
+.btn-secondary.danger-btn:hover {
+  background: rgba(229, 72, 77, 0.22);
+  border-color: var(--danger);
+}
+
+/* Shortcuts grid in About panel */
+.about-shortcuts-section {
+  width: 100%;
+  margin-top: 14px;
+  text-align: left;
+}
+
+.about-shortcuts-section h4 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.shortcuts-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.shortcut-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  font-size: 12px;
+  color: var(--text-main);
+}
+
+.shortcut-row kbd {
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--primary-light);
+  background: var(--bg-input);
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+}
+
+/* ─── Support / Donate Section in About Panel ───────────────────────────── */
+.about-donate-card {
+  width: 100%;
+  margin-top: 14px;
+  padding: 16px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+
+body.light-theme .about-donate-card {
+  background: #FFFFFF;
+  border-color: var(--border-color);
+}
+
+.about-donate-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.about-donate-icon {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 10px;
+  background: rgba(255, 90, 121, 0.12);
+  color: #FF5A79;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.about-donate-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: #FF5A79;
+}
+
+.about-donate-text h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 3px;
+}
+
+.about-donate-text p {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.about-donate-btn {
+  width: 100%;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  color: var(--text-muted);
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  overflow: hidden;
+  transition: color var(--transition-fast),
+              background var(--transition-fast),
+              border-color var(--transition-fast);
+}
+
+.about-donate-btn:hover {
+  color: #FF5A79;
+  background: rgba(255, 90, 121, 0.1);
+  border-color: rgba(255, 90, 121, 0.3);
+}
+
+.about-donate-btn .btn-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: inherit;
+}
+
+
+
+
+

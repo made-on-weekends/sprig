@@ -1,0 +1,58 @@
+appId: com.adommo.sprig
+productName: Sprig
+copyright: Copyright © 2026 Adommo LLC
+
+directories:
+  output: dist
+  buildResources: build
+
+files:
+  - src/**/*
+  - build/icons/**/*
+
+protocols:
+  - name: WhatsApp
+    schemes:
+      - whatsapp
+  - name: SMS
+    schemes:
+      - sms
+
+linux:
+  executableArgs:
+    - "--no-sandbox"
+  target:
+    - target: deb
+      arch:
+        - x64
+        - arm64
+    - target: AppImage
+      arch:
+        - x64
+        - arm64
+  category: Network
+  desktop:
+    Name: Sprig
+    Comment: A native WhatsApp & Google Messages client for Linux
+    MimeType: x-scheme-handler/whatsapp;x-scheme-handler/sms;
+    StartupWMClass: sprig
+    Keywords: whatsapp;google-messages;messages;sms;rcs;chat;messaging;sprig;
+  icon: build/icons
+  synopsis: A native WhatsApp & Google Messages client for Linux with multi-account support
+  description: >
+    Sprig is an unofficial, native WhatsApp and Google Messages client for Linux desktops. 
+    Run multiple WhatsApp and Google Messages accounts simultaneously in isolated sessions, 
+    handle whatsapp:// and sms: links natively, and integrate with your system tray.
+
+deb:
+  maintainer: Sprig Team <sprig@example.com>
+  depends:
+    - libnotify4
+    - "libappindicator3-1 | libayatana-appindicator3-1"
+    - libsecret-1-0
+    - libnss3
+    - libasound2
+  artifactName: sprig_${version}_${arch}.deb
+
+appImage:
+  artifactName: Sprig-${version}-${arch}.AppImage

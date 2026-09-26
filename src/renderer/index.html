@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://web.whatsapp.com https://*.web.whatsapp.com https://*.whatsapp.net https://*.whatsapp.com https://messages.google.com https://*.google.com https://*.gstatic.com https://*.googleusercontent.com https://*.googleapis.com wss://*.google.com blob: data:; frame-src 'self' https://web.whatsapp.com https://*.web.whatsapp.com https://*.whatsapp.net https://*.whatsapp.com https://messages.google.com https://*.google.com https://*.gstatic.com https://*.googleusercontent.com blob: data:; child-src 'self' https://web.whatsapp.com https://*.web.whatsapp.com https://*.whatsapp.net https://*.whatsapp.com https://messages.google.com https://*.google.com https://*.gstatic.com https://*.googleusercontent.com blob: data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://web.whatsapp.com https://*.whatsapp.net https://*.google.com https://*.gstatic.com; font-src 'self' https://fonts.gstatic.com data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://web.whatsapp.com https://*.whatsapp.net https://*.whatsapp.com https://messages.google.com https://*.google.com https://*.gstatic.com https://*.googleusercontent.com; img-src 'self' data: blob: https:; connect-src *;">
+  <title>Sprig</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <!-- ─── Sidebar ─────────────────────────────────────────────────── -->
+    <aside id="sidebar">
+      <div id="sidebar-header">
+        <div id="app-logo" title="Sprig">
+          <img src="../assets/brand/svg/icon.svg" alt="Sprig" class="app-logo-img">
+        </div>
+        <span id="app-title">Sprig</span>
+      </div>
+
+      <div id="account-tabs">
+        <!-- Account tabs rendered dynamically by renderer.js -->
+      </div>
+
+      <button id="add-account-btn" title="Add Account">
+        <div class="btn-icon-wrapper">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="btn-label">Add Account</span>
+      </button>
+
+      <div id="sidebar-footer">
+        <button id="donate-btn" title="Support Sprig">
+          <div class="btn-icon-wrapper">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="btn-label">Support Sprig</span>
+        </button>
+        <button id="settings-btn" title="Settings">
+          <div class="btn-icon-wrapper">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+              <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.32 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </div>
+          <span class="btn-label">Settings</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ─── Webview Container ───────────────────────────────────────── -->
+    <main id="webview-container">
+      <div id="loading-screen">
+        <div class="loading-spinner"></div>
+        <p id="loading-text">Loading...</p>
+      </div>
+      <!-- Webviews are created dynamically by renderer.js -->
+    </main>
+  </div>
+
+  <!-- ─── Hidden File Input for Avatar Selection ──────────────────── -->
+  <input type="file" id="avatar-file-input" accept="image/png, image/jpeg, image/webp, image/gif" style="display: none;">
+
+  <!-- ─── Context Menu ────────────────────────────────────────────── -->
+  <div id="context-menu" class="context-menu hidden">
+    <button id="ctx-rename" class="context-menu-item">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      Rename
+    </button>
+    <button id="ctx-avatar" class="context-menu-item">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="2"/></svg>
+      Change Avatar
+    </button>
+    <button id="ctx-remove-avatar" class="context-menu-item">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M15 9l-6 6M9 9l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      Remove Avatar
+    </button>
+    <button id="ctx-reload" class="context-menu-item">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M23 4v6h-6M1 20v-6h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Reload
+    </button>
+    <div class="context-menu-divider"></div>
+    <button id="ctx-remove" class="context-menu-item danger">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      Remove Account
+    </button>
+  </div>
+
+  <!-- ─── Rename Dialog ───────────────────────────────────────────── -->
+  <div id="rename-dialog" class="dialog-overlay hidden">
+    <div class="dialog">
+      <h3>Rename Account</h3>
+      <input type="text" id="rename-input" placeholder="Account name" maxlength="30" autofocus>
+      <div class="dialog-actions">
+        <button id="rename-cancel" class="dialog-btn secondary">Cancel</button>
+        <button id="rename-confirm" class="dialog-btn primary">Rename</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Add Account Dialog ──────────────────────────────────────── -->
+  <div id="add-dialog" class="dialog-overlay hidden">
+    <div class="dialog dialog-lg">
+      <h3>Add Messaging Account</h3>
+      <p class="dialog-description">Select a messaging platform to add. Each account runs in its own isolated session partition.</p>
+      
+      <!-- Service Selection Cards -->
+      <div class="service-selector">
+        <label class="service-option active" data-service="whatsapp">
+          <input type="radio" name="account-service" value="whatsapp" checked>
+          <div class="service-option-card">
+            <div class="service-icon whatsapp-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2zm5.79 14.07c-.24.68-1.4 1.25-1.93 1.33-.51.08-1.18.11-1.9-.12-.44-.14-1.01-.33-1.74-.65-3.08-1.33-5.09-4.45-5.24-4.66-.15-.2-1.25-1.66-1.25-3.17 0-1.51.79-2.25 1.07-2.55.28-.3.62-.37.83-.37.21 0 .41.01.59.02.19.01.44-.07.69.52.26.6.87 2.12.95 2.27.08.15.13.33.03.53-.1.2-.15.33-.3.51-.15.18-.32.4-.46.54-.15.15-.31.31-.13.62.18.31.8 1.32 1.72 2.14 1.18 1.05 2.18 1.38 2.49 1.53.31.15.49.13.67-.08.18-.21.77-.9 0.98-1.2.21-.3.41-.26.69-.15.28.11 1.78.84 2.08.99.3.15.51.23.59.35.08.13.08.74-.16 1.42z"/>
+              </svg>
+            </div>
+            <div class="service-details">
+              <span class="service-name">WhatsApp Web</span>
+              <span class="service-desc">Pair via QR code from WhatsApp mobile app</span>
+            </div>
+          </div>
+        </label>
+
+        <label class="service-option" data-service="google-messages">
+          <input type="radio" name="account-service" value="google-messages">
+          <div class="service-option-card">
+            <div class="service-icon google-messages-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z"/>
+                <circle cx="8" cy="10" r="1.5"/>
+                <circle cx="12" cy="10" r="1.5"/>
+                <circle cx="16" cy="10" r="1.5"/>
+              </svg>
+            </div>
+            <div class="service-details">
+              <span class="service-name">Google Messages</span>
+              <span class="service-desc">RCS & SMS paired via QR or Google Account</span>
+            </div>
+          </div>
+        </label>
+      </div>
+
+      <!-- Optional Custom Avatar Picker -->
+      <div class="form-group">
+        <label class="form-label">Account Avatar</label>
+        <div class="avatar-picker-section">
+          <div class="avatar-picker-preview" id="add-avatar-preview">
+            <span id="add-avatar-initials">A</span>
+            <img id="add-avatar-img" class="hidden" alt="Avatar Preview">
+          </div>
+          <div class="avatar-picker-actions">
+            <button type="button" id="add-avatar-btn" class="dialog-btn secondary btn-small">
+              <svg viewBox="0 0 24 24" fill="none" style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px;"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="2"/></svg>
+              Choose Photo
+            </button>
+            <button type="button" id="add-avatar-clear-btn" class="dialog-btn secondary btn-small hidden">Remove</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="add-name-input" class="form-label">Account Label</label>
+        <input type="text" id="add-name-input" placeholder="Account name (e.g., Personal, Work)" maxlength="30" autofocus>
+      </div>
+
+      <div class="dialog-actions">
+        <button id="add-cancel" class="dialog-btn secondary">Cancel</button>
+        <button id="add-confirm" class="dialog-btn primary">Add Account</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Settings Modal ──────────────────────────────────────────── -->
+  <div id="settings-dialog" class="dialog-overlay hidden">
+    <div class="settings-modal">
+      <div class="settings-header">
+        <h2>Sprig Settings</h2>
+        <button id="settings-close" class="icon-btn" title="Close Settings">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="settings-body">
+        <!-- Settings Nav Tabs -->
+        <nav class="settings-nav">
+          <button class="settings-tab-btn active" data-tab="general">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zM12 14a2 2 0 100-4 2 2 0 000 4z" stroke="currentColor" stroke-width="2"/></svg>
+            General
+          </button>
+          <button class="settings-tab-btn" data-tab="appearance">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            Appearance
+          </button>
+          <button class="settings-tab-btn" data-tab="notifications">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            Notifications
+          </button>
+          <button class="settings-tab-btn" data-tab="accounts">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8z" stroke="currentColor" stroke-width="2"/></svg>
+            Accounts & Data
+          </button>
+          <button class="settings-tab-btn" data-tab="about">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 16v-4M12 8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            About
+          </button>
+        </nav>
+
+        <!-- Settings Content Panels -->
+        <div class="settings-content">
+          <!-- General Tab -->
+          <div class="settings-panel active" id="tab-general">
+            <h3>General Preferences</h3>
+            
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-title">Start on System Startup</span>
+                <span class="setting-desc">Automatically launch Sprig when you log in to Linux.</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="setting-autostart">
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-title">Minimize to Tray on Close</span>
+                <span class="setting-desc">Closing the window hides Sprig to the system tray instead of quitting.</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="setting-closetotray">
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-title">Start Minimized to Tray</span>
+                <span class="setting-desc">Launch Sprig in the background without opening the main window.</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="setting-startminimized">
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-title">Enable Spell Checker</span>
+                <span class="setting-desc">Spellcheck message input fields inside WhatsApp and Google Messages chats.</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="setting-spellcheck" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Appearance Tab -->
+          <div class="settings-panel" id="tab-appearance">
+            <h3>Appearance & Interface</h3>
+            
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-title">Color Theme</span>
+                <span class="setting-desc">Select visual theme preference for Sprig application frame.</span>
+              </div>
+              <select id="setting-theme" class="setting-select">
+                <option value="dark">Dark (Default)</option>
+                <option value="light">Light</option>
+                <option value="system">Follow System (libadwaita)</option>
+              </select>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-title">Collapsible Sidebar</span>
+                <span class="setting-desc">Collapse sidebar into a compact icon rail.</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="setting-sidebarcollapsed">
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-title">Compact Web Navigation</span>
+                <span class="setting-desc">Hide redundant navigation chrome inside WhatsApp Web and messaging views.</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="setting-compactwa" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-title">Display Zoom Factor</span>
+                <span class="setting-desc">Adjust display scale for chat windows and web views.</span>
+              </div>
+              <select id="setting-zoomlevel" class="setting-select">
+                <option value="80">80%</option>
+                <option value="90">90%</option>
+                <option value="100" selected>100% (Default)</option>
+                <option value="110">110%</option>
+                <option value="120">120%</option>
+                <option value="125">125%</option>
+                <option value="150">150%</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Notifications Tab -->
+          <div class="settings-panel" id="tab-notifications">
+            <h3>Notifications & Sound Alerts</h3>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-title">Desktop Notifications</span>
+                <span class="setting-desc">Show native OS desktop popups when new messages arrive.</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="setting-notifications" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <!-- Per-Account Notification Toggles directly under Desktop Notifications -->
+            <div class="account-notifications-subpanel" id="account-notifications-subpanel">
+              <div class="subpanel-header">
+                <span class="subpanel-title">Accounts</span>
+              </div>
+              <div id="settings-notifications-account-list" class="settings-notifications-account-list">
+                <!-- Rendered dynamically -->
+              </div>
+            </div>
+
+            <div class="setting-item" id="sound-alerts-setting-item">
+              <div class="setting-info">
+                <span class="setting-title">Sound Alerts</span>
+                <span class="setting-desc">Play audio alert chime for incoming unread messages. Relies on Desktop Notifications being active.</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="setting-soundalerts" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-title">Tray Unread Counter</span>
+                <span class="setting-desc">Display total unread message count in the system tray tooltip and icon.</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="setting-traybadges" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Accounts & Data Tab -->
+          <div class="settings-panel" id="tab-accounts">
+            <h3>Account Session Storage</h3>
+            <p class="panel-desc">Manage local session partition cache for your configured WhatsApp and Google Messages accounts.</p>
+            <div id="settings-account-list" class="settings-account-list">
+              <!-- Rendered dynamically -->
+            </div>
+
+            <div class="setting-section-divider"></div>
+            <div class="setting-item flex-column">
+              <div class="setting-info">
+                <span class="setting-title">Clear All Application Cache</span>
+                <span class="setting-desc">Flush temporary cache and storage data across all isolated account sessions.</span>
+              </div>
+              <button id="clear-all-cache-btn" class="btn-secondary danger-btn" style="margin-top: 10px;">Clear All Session Cache</button>
+            </div>
+          </div>
+
+          <!-- About Tab -->
+          <div class="settings-panel" id="tab-about">
+            <div class="about-card">
+              <img src="../assets/brand/hicolor/128.png" alt="Sprig Logo" class="about-logo">
+              <h3>Sprig</h3>
+              <p class="about-tagline">An open-source desktop client for WhatsApp Web and Google Messages on Linux.</p>
+              <span class="about-version">Version 1.0.0</span>
+
+              <div class="about-disclaimer" style="margin-top: 10px; background: rgba(22, 179, 100, 0.08); border-color: rgba(22, 179, 100, 0.25);">
+                <strong>Open Source & Privacy First:</strong> Sprig is a fully open-source desktop client that brings WhatsApp Web and Google Messages to Ubuntu and other Linux distributions. It connects directly to official web endpoints (<code>web.whatsapp.com</code> and <code>messages.google.com</code>) in isolated sandbox partitions and runs no intermediary servers: all communications travel directly between your device and the respective messaging services. Sprig collects no telemetry or analytics.
+              </div>
+
+              <!-- Support & Donate Section -->
+              <div class="about-donate-card">
+                <div class="about-donate-header">
+                  <div class="about-donate-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div class="about-donate-text">
+                    <h4>Support Sprig Development</h4>
+                    <p>Sprig is 100% free and open-source. Donations support continuous development, new features, and Linux packaging.</p>
+                  </div>
+                </div>
+                <button id="about-donate-btn" class="about-donate-btn" title="Support Sprig">
+                  <span class="btn-label">Support Sprig</span>
+                </button>
+              </div>
+
+              <div class="about-shortcuts-section">
+                <h4>Quick Keyboard Shortcuts</h4>
+                <div class="shortcuts-grid">
+                  <div class="shortcut-row"><span>Switch Account 1..9</span><kbd>Ctrl + 1..9</kbd></div>
+                  <div class="shortcut-row"><span>Cycle Accounts</span><kbd>Ctrl + Tab</kbd></div>
+                  <div class="shortcut-row"><span>Add New Account</span><kbd>Ctrl + N</kbd></div>
+                  <div class="shortcut-row"><span>Toggle Dev Tools</span><kbd>Ctrl + Shift + I</kbd></div>
+                  <div class="shortcut-row"><span>Close Dialogs</span><kbd>Esc</kbd></div>
+                </div>
+              </div>
+
+              <div class="about-disclaimer">
+                <strong>Legal Disclaimer:</strong> Sprig is an independent, community-driven client. It is not affiliated with, authorized, or endorsed by Meta Platforms, Inc. or Google LLC. WhatsApp is a trademark of Meta Platforms, Inc.; Google Messages is a trademark of Google LLC. Published on <a href="https://github.com/made-on-weekends/sprig" target="_blank" style="color: var(--primary-light); text-decoration: underline;">GitHub</a> under the MIT License.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
