@@ -1,0 +1,69 @@
+/* Sprig — design tokens as CSS custom properties.
+   Generated from _ops/tokens/sprig.json by _ops/scripts/gen-sidecars.mjs.
+   Source of truth: sprig/DESIGN.md §3 (semantic roles, post-D-019)
+   Do not hand-edit; re-run the script instead. */
+
+/* Ramps — fixed colours, identical in both modes. The semantic tokens below draw
+   from these; do not use a ramp step directly where a role token exists. */
+:root {
+  --slate-50: #F7FBF8;
+  --slate-100: #DDE2DF;
+  --slate-200: #C3CAC6;
+  --slate-300: #AAB2AD;
+  --slate-400: #929B96;
+  --slate-500: #7A857F;
+  --slate-600: #636F69;
+  --slate-700: #4D5A54;
+  --slate-800: #38463F;
+  --slate-900: #23322C;
+  --slate-950: #10201A;
+  --leaf-300: #48E570;
+  --leaf-400: #2AC66C;
+  --leaf-500: #10A765;
+  --leaf-600: #04895B;
+  --leaf-700: #0C6B4E;
+}
+
+:root {
+  --background: #F7FBF8;
+  --surface: #FFFFFF;
+  --surface-sunken: #E7F6EC;
+  --text: #10201A;
+  --text-muted: #606E66;
+  --border: #E3EDE7;
+  --border-strong: #6B7B72;
+  --accent: #0C6B4E;
+  --accent-fill: #16B364;
+  --text-on-accent: #10201A;
+  --error: #C83B40;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --background: #0E1512;
+    --surface: #16211C;
+    --surface-sunken: #1E2A24;
+    --text: #F7FBF8;
+    --text-muted: #86958D;
+    --border: #26332C;
+    --border-strong: #6B7B72;
+    --accent: #2AC66C;
+    --accent-fill: #16B364;
+    --text-on-accent: #10201A;
+    --error: #F0736A;
+  }
+}
+
+:root[data-theme="dark"] {
+  --background: #0E1512;
+  --surface: #16211C;
+  --surface-sunken: #1E2A24;
+  --text: #F7FBF8;
+  --text-muted: #86958D;
+  --border: #26332C;
+  --border-strong: #6B7B72;
+  --accent: #2AC66C;
+  --accent-fill: #16B364;
+  --text-on-accent: #10201A;
+  --error: #F0736A;
+}

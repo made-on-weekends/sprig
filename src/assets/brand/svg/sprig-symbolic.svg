@@ -1,0 +1,15 @@
+<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sprig">
+  <!--
+    Symbolic tray/status mark (DESIGN.md 4, 6.5). Single-fill currentColor: the shell recolours
+    it for light and dark trays, so it carries none of the app icon's gradients or shadow -
+    those are icon-only per 4 and must not appear in the interface.
+
+    Drawn on the GNOME symbolic 16px grid rather than scaled down from the 512 master: at tray
+    size the master's 8-unit midrib and 6-unit veins fall well under one device pixel and the
+    leaf fills in solid. The bubble is kept as an outline and the leaf as a solid silhouette so
+    the two read apart at 16px, which is the whole reason this file exists (4 minimum-size rule:
+    colour icon to 32px, symbolic below).
+  -->
+  <path fill="currentColor" d="M3 1.5h10A1.5 1.5 0 0 1 14.5 3v7A1.5 1.5 0 0 1 13 11.5H6.9l-3.1 2.9A.5.5 0 0 1 3 14v-2.5A1.5 1.5 0 0 1 1.5 10V3A1.5 1.5 0 0 1 3 1.5Zm0 1A.5.5 0 0 0 2.5 3v7a.5.5 0 0 0 .5.5h.5a.5.5 0 0 1 .5.5v1.85l2.35-2.2a.5.5 0 0 1 .35-.15H13a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5Z"/>
+  <path fill="currentColor" d="M8 3.6c1.55 1 1.55 3.6 0 4.6-1.55-1-1.55-3.6 0-4.6Z"/>
+</svg>
