@@ -39,8 +39,13 @@
   /* Shadows */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.6);
-  --shadow-glow: 0 0 16px rgba(22, 179, 100, 0.25);
+  --shadow-lg: 0 8px 34px rgba(0, 0, 0, 0.28), 0 0 0 1px var(--border-color);
+
+  /* Radii (libadwaita specification per Stitch) */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 12px;
+  --radius-full: 999px;
 
   /* Layout Dimensions & Transitions */
   --sidebar-width: 240px;
@@ -851,7 +856,7 @@ input, select {
 .dialog {
   background: var(--bg-dialog);
   border: 1px solid var(--border-color);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   padding: 24px;
   min-width: 340px;
   max-width: 420px;
@@ -916,7 +921,7 @@ input, select {
 .service-option input[type="radio"]:checked + .service-option-card {
   background: var(--bg-active);
   border-color: var(--primary);
-  box-shadow: 0 0 0 1px var(--primary), var(--shadow-glow);
+  box-shadow: 0 0 0 1px var(--primary);
 }
 
 .service-icon {
@@ -936,7 +941,7 @@ input, select {
 
 .whatsapp-icon {
   background: rgba(22, 179, 100, 0.15);
-  color: #25D366;
+  color: var(--primary);
 }
 
 .google-messages-icon {
@@ -999,7 +1004,7 @@ input, select {
   justify-content: center;
   font-weight: 700;
   font-size: 16px;
-  color: #FFFFFF;
+  color: var(--text-on-primary);
   overflow: hidden;
   position: relative;
   box-shadow: var(--shadow-sm);
@@ -1042,7 +1047,7 @@ input, select {
 }
 
 .account-service-badge.whatsapp svg {
-  color: #25D366;
+  color: var(--primary);
 }
 
 .account-service-badge.google-messages svg {
@@ -1065,14 +1070,16 @@ input, select {
   width: 100%;
   padding: 10px 14px;
   background: var(--bg-input);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
   color: var(--text-main);
   margin-top: 4px;
 }
 
 .dialog input[type="text"]:focus {
   border-color: var(--primary);
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
 }
 
 .dialog-actions {
@@ -1084,7 +1091,7 @@ input, select {
 
 .dialog-btn {
   padding: 8px 18px;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   font-size: 13px;
   font-weight: 600;
 }
@@ -1118,7 +1125,7 @@ input, select {
   max-height: 85vh;
   background: var(--bg-dialog);
   border: 1px solid var(--border-color);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
   display: flex;
   flex-direction: column;
@@ -1348,7 +1355,7 @@ input:checked + .slider:before {
   padding: 8px 12px;
   background: var(--bg-input);
   border: 1px solid var(--border-color);
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   color: var(--text-main);
   font-size: 13px;
   min-width: 180px;
@@ -1551,7 +1558,7 @@ body.light-theme .settings-notif-account-row:not(:last-child) {
   width: 100%;
   height: 38px;
   margin-top: 14px;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   background: var(--bg-input);
   border: 1px solid var(--border-color);
   font-size: 13px;
@@ -1674,7 +1681,7 @@ body.light-theme .settings-notif-account-row:not(:last-child) {
   gap: 8px;
   background: var(--bg-input);
   border: 1px solid var(--border-color);
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   font-size: 13px;
   font-weight: 500;
   color: var(--text-main);
@@ -1718,7 +1725,7 @@ body.light-theme .settings-notif-account-row:not(:last-child) {
   padding: 8px 16px;
   font-size: 13px;
   font-weight: 600;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   background: var(--bg-input);
   color: var(--text-main);
   border: 1px solid var(--border-color);
@@ -1853,7 +1860,7 @@ body.light-theme .about-donate-card {
 .about-donate-btn {
   width: 100%;
   height: 40px;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1878,6 +1885,80 @@ body.light-theme .about-donate-card {
   font-size: 13px;
   font-weight: 600;
   color: inherit;
+}
+
+/* ─── Stitch AdwViewSwitcher Segmented Control ───────────────────────────── */
+.theme-switcher-pills {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  background: var(--bg-hover);
+  padding: 3px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  width: 100%;
+  max-width: 320px;
+}
+
+.theme-pill-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid transparent;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.theme-pill-btn:hover {
+  color: var(--text-main);
+}
+
+.theme-pill-btn.active {
+  background: var(--bg-panel);
+  color: var(--primary);
+  border-color: var(--border-color);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  font-weight: 600;
+}
+
+/* ─── Connection Banner Retry & Security Pill ────────────────────────────── */
+.banner-retry-btn {
+  padding: 3px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-panel);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 8px;
+  transition: all var(--transition-fast);
+}
+
+.banner-retry-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--primary);
+}
+
+.empty-security-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  background: var(--bg-hover);
+  border: 1px solid var(--border-color);
+  font-size: 11px;
+  color: var(--secondary);
+  font-weight: 500;
+  margin-bottom: 8px;
 }
 
 

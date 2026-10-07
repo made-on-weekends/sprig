@@ -86,7 +86,7 @@ function createTray(mainWindow, quitCallback, options = {}) {
       },
       { type: 'separator' },
       {
-        label: 'Quit',
+        label: 'Quit Sprig',
         click: () => {
           if (quitCallback) quitCallback();
         },

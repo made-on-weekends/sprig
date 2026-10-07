@@ -949,7 +949,34 @@ function setupSettingsListeners() {
     const val = e.target.value;
     applyTheme(val);
     api.setSetting('theme', val);
+    document.querySelectorAll('#theme-switcher-pills .theme-pill-btn').forEach(b => {
+      b.classList.toggle('active', b.getAttribute('data-theme-val') === val);
+    });
   });
+
+  // Stitch AdwViewSwitcher segmented theme pills
+  document.querySelectorAll('#theme-switcher-pills .theme-pill-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const val = btn.getAttribute('data-theme-val');
+      document.querySelectorAll('#theme-switcher-pills .theme-pill-btn').forEach(b => {
+        b.classList.toggle('active', b === btn);
+      });
+      settingTheme.value = val;
+      applyTheme(val);
+      api.setSetting('theme', val);
+    });
+  });
+
+  const connectionRetryBtn = document.getElementById('connection-retry-btn');
+  if (connectionRetryBtn) {
+    connectionRetryBtn.addEventListener('click', () => {
+      const activeWv = document.querySelector('#webview-container webview.active');
+      if (activeWv) {
+        activeWv.reload();
+      }
+      updateOnlineStatus();
+    });
+  }
 
   settingSidebarcollapsed.addEventListener('change', (e) => {
     const val = e.target.checked;
@@ -1070,7 +1097,11 @@ function syncSettingsUI() {
   settingClosetotray.checked = settings.closeToTray !== false;
   settingStartminimized.checked = Boolean(settings.startMinimized);
   settingSpellcheck.checked = settings.spellCheck !== false;
-  settingTheme.value = settings.theme || 'dark';
+  const currentTheme = settings.theme || 'dark';
+  settingTheme.value = currentTheme;
+  document.querySelectorAll('#theme-switcher-pills .theme-pill-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-theme-val') === currentTheme);
+  });
   settingSidebarcollapsed.checked = Boolean(settings.sidebarCollapsed);
   settingCompactwa.checked = settings.compactWA !== false;
   settingZoomlevel.value = settings.zoomLevel || '100';

@@ -70,6 +70,7 @@
           <line x1="12" y1="20" x2="12.01" y2="20"/>
         </svg>
         <span class="banner-text">Waiting for Network… Check your internet connection.</span>
+        <button id="connection-retry-btn" class="banner-retry-btn" type="button">Retry</button>
       </div>
 
       <!-- Loading Screen -->
@@ -86,13 +87,19 @@
           </div>
           <h2 class="empty-title font-wordmark">Sprig</h2>
           <p class="empty-desc">Choose an account from the sidebar or add a new messaging session.</p>
+          <div class="empty-security-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;flex-shrink:0;">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <span>Session partitions isolated &amp; end-to-end encrypted</span>
+          </div>
           <button id="empty-add-btn" class="dialog-btn primary">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:6px;"><path d="M12 5v14M5 12h14"/></svg>
             Add Account
           </button>
         </div>
         <div class="empty-disclaimer-strip">
-          Sprig is an independent client. Not affiliated with WhatsApp or Meta Platforms, Inc.
+          Sprig is an independent client. Not affiliated with WhatsApp or Meta Platforms, Inc. WhatsApp is a trademark of Meta Platforms, Inc.
         </div>
       </div>
       <!-- Webviews are created dynamically by renderer.js -->
@@ -301,12 +308,26 @@
           <div class="settings-panel" id="tab-appearance">
             <h3>Appearance & Interface</h3>
             
-            <div class="setting-item">
+            <div class="setting-item flex-column">
               <div class="setting-info">
-                <span class="setting-title">Color Theme</span>
-                <span class="setting-desc">Select visual theme preference for Sprig application frame.</span>
+                <span class="setting-title">Color Scheme</span>
+                <span class="setting-desc">Adapt interface to system theme or force mode (libadwaita)</span>
               </div>
-              <select id="setting-theme" class="setting-select">
+              <div class="theme-switcher-pills" id="theme-switcher-pills">
+                <button type="button" class="theme-pill-btn" data-theme-val="system">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20z"/></svg>
+                  System
+                </button>
+                <button type="button" class="theme-pill-btn" data-theme-val="light">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                  Light
+                </button>
+                <button type="button" class="theme-pill-btn active" data-theme-val="dark">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                  Dark
+                </button>
+              </div>
+              <select id="setting-theme" class="setting-select" style="display: none;">
                 <option value="dark">Dark (Default)</option>
                 <option value="light">Light</option>
                 <option value="system">Follow System (libadwaita)</option>

@@ -2,16 +2,16 @@ const fs = require('fs');
 const path = require('path');
 const { app } = require('electron');
 
-// Color palette for account avatars
+// Color palette for account avatars (Botanical Sprig tones, distinct from WhatsApp)
 const ACCOUNT_COLORS = [
-  '#00a884', // WhatsApp green
-  '#5b72e8', // Blue
-  '#e85b8b', // Pink
-  '#e8a85b', // Orange
-  '#8b5be8', // Purple
-  '#5be8c6', // Teal
-  '#e85b5b', // Red
-  '#5bb8e8', // Sky blue
+  '#16B364', // Sprig emerald (primary)
+  '#0C6B4E', // Forest green
+  '#4A7BD9', // Royal blue
+  '#8B5BE8', // Purple
+  '#E85B8B', // Berry
+  '#E88B5B', // Tangerine
+  '#2AC66C', // Leaf green
+  '#3EA8A8', // Teal
 ];
 
 /**
