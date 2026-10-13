@@ -1,0 +1,26 @@
+{
+  "name": "sprig",
+  "version": "1.0.0",
+  "description": "Sprig — A native WhatsApp & Google Messages client for Linux",
+  "main": "src/main/main.js",
+  "author": {
+    "name": "Asif Iqbal",
+    "email": "contact@asifiqbal.rocks",
+    "url": "https://asifiqbal.rocks"
+  },
+  "homepage": "https://github.com/made-on-weekends/sprig",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron . --no-sandbox",
+    "dev": "electron . --no-sandbox --dev",
+    "pack": "electron-builder --dir",
+    "build": "electron-builder --linux",
+    "build:deb": "electron-builder --linux deb",
+    "build:appimage": "electron-builder --linux AppImage",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "devDependencies": {
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  }
+}
